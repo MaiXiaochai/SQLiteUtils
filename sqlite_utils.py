@@ -1,7 +1,6 @@
 """
 ------------------------------------------
 @File       : sqlite_utils.py
-@CreatedOn  : 2023/9/27 10:34
 ------------------------------------------
 """
 import sqlite3
@@ -24,6 +23,16 @@ class SQLiteUtils:
     def fetchone(self, sql):
         self.execute(sql)
         return self.cur.fetchone()
+
+    def fetchall(self, sql):
+        self.execute(sql)
+
+        return self.cur.fetchall()
+
+    def exist_table(self, table_name):
+        """检查表是否存在"""
+        sql = f"SELECT count(*) FROM sqlite_master WHERE name='{table_name}'"
+        return self.fetchone(sql)[0] == 1
 
     def close(self):
         self.cur.close()
